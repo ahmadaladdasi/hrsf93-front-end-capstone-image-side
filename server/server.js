@@ -28,8 +28,13 @@ app.post('/:name/:id/:imagesId', (req, res) => {
 app.get('/:name/:id/:imagesId', (req, res) => {
   const id = req.params.imagesId;
   Picture.findOne({ id })
-    .then(data => res.send(JSON.stringify(data)))
-    .catch(err => console.log(err));
+    .then((data, err) => {
+      if (data) res.send(JSON.stringify(data));
+      else {
+        console.log(err);
+        res.status(400).send('not found');
+      }
+    });
 });
 
 mongoose.connect('mongodb://localhost/images');
