@@ -1,46 +1,15 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/images');
-
-const imageSchema = mongoose.Schema({
-  // TODO: your schema here!
+const picSchema = mongoose.Schema({
   id: {
-    type: Number, required: true, index: true, unique: true,
+    type: Number, required: true, unique: true, dropDups: true,
   },
   name: {
-    type: String, unique: true, required: true,
+    type: String, unique: true, required: true, dropDups: true,
   },
-  imageURLs: Array,
+  urls: Array,
 });
 
-const Picture = mongoose.model('Picture', imageSchema);
+const Picture = mongoose.model('Picture', picSchema);
 
-const save = (images) => {
-  images.forEach((image) => {
-    const newImage = new Picture({
-      id: image.id,
-      name: image.name,
-      imageURLs: image.urls,
-    });
-    newImage.save().catch(err => console.log(err));
-  });
-};
-
-const saveOne = (image) => {
-  const newImage = new Picture({
-    id: image.id,
-    name: image.name,
-    imageURLs: image.urls,
-  });
-  newImage.save().catch(err => console.log(err));
-};
-
-const query = (id, cb) => {
-  (Picture.find({ id }, 'id name imageURLs', { sort: { id: 1 } }, (err, doc) => {
-    cb(doc);
-  }));
-};
-
-module.exports.saveOne = saveOne;
-module.exports.save = save;
-module.exports.query = query;
+module.exports = Picture;

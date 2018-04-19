@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const db = require('../database/index.js');
+const Picture = require('../database/index.js');
+const mongoose = require('mongoose');
 
 const app = express();
 
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded());
+
 
 app.use(express.static(`${__dirname}/../client/dist`));
 
@@ -15,20 +16,28 @@ app.post('/:name/:id/:imagesId', (req, res) => {
     name: req.body.name,
     urls: req.body.urls,
   };
-
-  db.saveOne(data);
-  res.send(data);
+  Picture.create(data)
+    .then(() => res.send('Pictures Saved'))
+    .catch((err) => {
+      console.log(err);
+      res.status(501).send('Saving Failed');
+    });
 });
 
 
 app.get('/:name/:id/:imagesId', (req, res) => {
   const id = req.params.imagesId;
-  db.query(id, data => res.send(data));
+  Picture.findOne({ id })
+    .then(data => res.send(JSON.stringify(data)))
+    .catch(err => console.log(err));
 });
 
+mongoose.connect('mongodb://localhost/images');
 
 const port = 24623;
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+mongoose.connection.once('open', () => {
+  console.log('Connection to database successful!');
+
+  app.listen(port, () => console.log(`listening on port ${port}`));
 });
