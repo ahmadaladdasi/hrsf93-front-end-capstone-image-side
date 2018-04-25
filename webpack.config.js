@@ -9,14 +9,17 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.json'],
+  },
   module: {
     rules: [
       {
         test: /\.jsx?/,
         include: SRC_DIR,
         loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015'],
+        options: {
+          presets: ['react', ['env', { displayErrorDetails: true }]],
         },
       },
     ],

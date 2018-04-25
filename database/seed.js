@@ -4,19 +4,23 @@ const faker = require('faker');
 
 let fakeData = [];
 
-const randomFakeImageURLs = () => {
-  const fakeUrl = [];
+
+const makeRandomFakeImageURLs = () => {
+  const fakeUrls = [];
   for (let i = 0; i < Math.ceil(Math.random() * 10); i += 1) {
-    fakeUrl.push(faker.image.imageUrl());
+    let num = Math.ceil(Math.random() * 499);
+    num = num.toString().padStart(3, '0');
+    const hostedUrl = `https://s3-us-west-1.amazonaws.com/ahmad-product-images/pic_${num}.jpg`;
+    fakeUrls.push(hostedUrl);
   }
-  return fakeUrl;
+  return fakeUrls;
 };
 
-for (let i = 100000; i < 100100; i += 1) {
+for (let i = 200000; i < 200100; i += 1) {
   fakeData.push({
     id: i,
     name: faker.commerce.productName(),
-    urls: randomFakeImageURLs(),
+    urls: makeRandomFakeImageURLs(),
   });
 }
 
