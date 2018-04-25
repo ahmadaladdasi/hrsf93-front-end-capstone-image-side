@@ -8,4 +8,6 @@ const App = () => (
   </div>
 );
 
+// future Components to be added in the App Component.
+
 ReactDOM.render(<App />, document.getElementById('images-sidebar'));

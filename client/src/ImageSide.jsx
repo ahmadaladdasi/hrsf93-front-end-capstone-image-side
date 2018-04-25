@@ -23,7 +23,7 @@ class ImageSide extends React.Component {
       .then(info => info.json())
       .then((info) => {
         this.loadSlides(info.urls);
-        this.setState({ data: info.urls });
+        this.loadSlides(info.urls);
       })
       .catch((error) => {
         console.error(error);
@@ -40,8 +40,8 @@ class ImageSide extends React.Component {
     return (
       <Carousel width="500px" showStatus={false} showIndicators={false}>
         {
-        this.state.data.map((url, index) => (
-          <img key={index} src={url} alt="logo" />
+        this.state.data.map(url => (
+          <img key={url} src={url} alt="logo" />
         ))
       }
       </Carousel>
