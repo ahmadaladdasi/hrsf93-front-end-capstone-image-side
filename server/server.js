@@ -8,9 +8,9 @@ const app = express();
 app.use(bodyparser.json());
 
 
-app.use('/listings/:name/:imagesId/', express.static(`${__dirname}/../client/dist`));
+app.use('/listings/:imagesId/:name/', express.static(`${__dirname}/../public`));
 
-app.post('listings/:name/:imagesId', (req, res) => {
+app.post('listings/:imagesId/:name', (req, res) => {
   const data = {
     id: req.params.imagesId,
     name: req.body.name,
@@ -25,7 +25,7 @@ app.post('listings/:name/:imagesId', (req, res) => {
 });
 
 
-app.get('/listings/:name/:imagesId/data', (req, res) => {
+app.get('/listings/:imagesId/:name/data', (req, res) => {
   const id = req.params.imagesId;
   Picture.findOne({ id })
     .then((data, err) => {

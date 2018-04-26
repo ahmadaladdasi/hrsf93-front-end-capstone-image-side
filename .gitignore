@@ -1,6 +1,6 @@
 ## MAC files ##
 .DS_Store
-
+bundle.js
 ## NPM ##
 npm
 npm-debug.log
@@ -23,4 +23,3 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
-
