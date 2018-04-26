@@ -1,4 +1,5 @@
 const Picture = require('./index.js');
+const ListingsInfo = require('./urls.js')
 const mongoose = require('mongoose');
 const faker = require('faker');
 
@@ -16,14 +17,20 @@ const makeRandomFakeImageURLs = () => {
   return fakeUrls;
 };
 
-for (let i = 200000; i < 200100; i += 1) {
-  fakeData.push({
-    id: i,
-    name: faker.commerce.productName(),
-    urls: makeRandomFakeImageURLs(),
-  });
-}
+// for (let i = 200000; i < 200100; i += 1) {
+//   fakeData.push({
+//     id: i,
+//     name: faker.commerce.productName(),
+//     urls: makeRandomFakeImageURLs(),
+//   });
+// }
 
+fakeData = ListingsInfo.map(el => (
+  {
+    id: el.listingNum,
+    name: el.listingName,
+    urls: makeRandomFakeImageURLs(),
+  }));
 
 mongoose.connect('mongodb://localhost/images').then(() => {
   Picture.create(fakeData)
