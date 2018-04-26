@@ -29,8 +29,10 @@ app.get('/listings/:imagesId/:name/data', (req, res) => {
   const id = req.params.imagesId;
   Picture.findOne({ id })
     .then((data, err) => {
-      if (data) res.send(JSON.stringify(data));
-      else {
+      if (data) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.send(JSON.stringify(data));
+      } else {
         console.log(err);
         res.status(400).send('not found');
       }
